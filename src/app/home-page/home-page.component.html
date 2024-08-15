@@ -1,0 +1,21 @@
+<div>
+  <div>
+    <button>Add Product</button>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of tableData">
+          <td>{{ row.productName }}</td>
+          <td>Edit</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

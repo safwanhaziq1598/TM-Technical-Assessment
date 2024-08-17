@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 //Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/input';
+import { MatLabel } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 //Services
 import { AuthService } from '../../service/auth.service';
@@ -16,6 +19,9 @@ import { UserLoginResponse } from '../../models/user';
   imports: [
     MatCardModule,
     MatInput,
+    MatFormField,
+    MatLabel,
+    MatButtonModule,
     ReactiveFormsModule
   ],
   templateUrl: './login-page.component.html',

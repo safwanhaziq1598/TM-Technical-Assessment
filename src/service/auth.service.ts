@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { UserLoginResponse, User } from '../models/user'
 
 @Injectable({
@@ -15,6 +15,17 @@ export class AuthService {
   ) { }
 
   login(credentials: User): Observable<UserLoginResponse> {
-    return this.http.post<UserLoginResponse>(this.apiLoginUrl, credentials);
+    return this.http.post<UserLoginResponse>(this.apiLoginUrl, credentials)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.status === 401) {
+      errorMessage = 'Invalid username or password. Please try again.';
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }

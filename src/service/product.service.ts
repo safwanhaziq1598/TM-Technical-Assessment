@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Params } from '@angular/router';
+import { ProductDetailsList } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,22 @@ export class ProductService {
     return this.http.get<any>(this.apiUrl1, {headers});
   }
 
-  getProductDetail(token: string, productId: string): Observable<any> {
+  getProductDetail(token: string, productId: string, indexNumber: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
+
     const url = `${this.apiUrl2}/${productId}`;
+    console.log(url);
     const headers = new HttpHeaders({
       'Authorization' : `Bearer ${token}`
     });
 
+    let queryParams = new HttpParams()
+      .set('indexNumber', indexNumber.toString())
+      .set('pageSize', pageSize.toString())
+      .set('startDate', startDate)
+      .set('endDate', endDate)
 
-    return this.http.get<any>(url, {headers});
+      console.log(queryParams);
+    return this.http.get<any>(url, {headers, params: queryParams});
   }
 }
 

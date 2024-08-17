@@ -32,11 +32,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+    <tr *ngFor="let data of tableData2" >
+      <td>{{ data.status }}</td>
+      <td>{{ data.dateTimeString }}</td>
+      <td>{{ data.remark }}</td>
+      <td>{{ data.duration }}</td>
     </tr>
   </tbody>
 </table>

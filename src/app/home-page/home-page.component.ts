@@ -1,14 +1,18 @@
 import { ProductService } from './../../service/product.service';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductDetails, ProductDetailsList } from '../../models/product';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
 
 //Angular Material
 import { MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule} from '@angular/material/toolbar';
+import { ProductPageComponent } from "../product-page/product-page.component";
+import { ProductDetailPageComponent } from "../product-detail-page/product-detail-page.component";
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -16,71 +20,33 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
+    MatToolbarModule,
     CommonModule,
-    RouterModule
-  ],
+    RouterModule,
+    ProductPageComponent,
+    ProductDetailPageComponent
+],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements OnInit {
-  displayedColumns: string[] = ['productName', 'action']
-  dataSource = new MatTableDataSource<ProductDetails>([]);
-  tableData: ProductDetails[] = [];
-  productId: string = "";
-  token: string = "";
-  pageSize: number = 5
-  totalItems: number = 100;
+
 
   constructor(
-    private productService: ProductService,
-    private router: Router
+    public authService: AuthService,
   ) {}
 
   ngOnInit() {
-    this.token = localStorage.getItem('token')!;
 
-    this.getProductListData();
+    this.authService.isHome = true;
   }
 
-  getProductListData() {
 
-    try {
-      this.productService.getProductList(this.token).subscribe(
-        (data : ProductDetails[]) => {
-          console.log(data);
-          this.tableData = data;
-
-          this.dataSource.data = this.tableData;
-        },
-        (error) => {
-          console.error('Error fetching product list: ', error);
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  goToProduct(element: ProductDetails){
-
-    this.router.navigate(['/product'], {
-      queryParams: {
-        id: element.id
-      }
-    })
-
-
-  }
-  addProduct(){
+  goHome(){
 
   }
 
-  editProduct(element: string){
-
-  }
-
-  onPageChange(){
-
+  logout(){
 
   }
 

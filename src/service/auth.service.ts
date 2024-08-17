@@ -9,7 +9,8 @@ import { UserLoginResponse, User } from '../models/user'
 export class AuthService {
 
   private apiLoginUrl = 'https://intermediate-test-v-2-web-test.apps.ocp.tmrnd.com.my/api/auth'
-
+  isHome: boolean = false;
+  isDetail: boolean = false
   constructor(
     private http: HttpClient
   ) { }

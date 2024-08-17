@@ -3,18 +3,32 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProductDetails, ProductDetailsList } from '../../models/product';
 
+//Angular Material
+import { MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatCardModule,
+    CommonModule
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements OnInit {
+  displayedColumns: string[] = ['productName', 'action']
+  dataSource = new MatTableDataSource<ProductDetails>([]);
   tableData: ProductDetails[] = [];
   tableData2: ProductDetailsList[] = [];
   productId: string = "";
   token: string = "";
+  pageSize: number = 5
+  totalItems: number = 100;
+
   constructor(private productService: ProductService) {}
 
   ngOnInit() {
@@ -35,7 +49,7 @@ export class HomePageComponent implements OnInit {
           console.log(data);
           this.tableData = data;
           this.productId = data[0].id;
-
+          this.dataSource.data = this.tableData;
           this.getProductData(this.token, this.productId, indexNumber, pageSize, startDate,endDate);
         },
         (error) => {
@@ -67,5 +81,18 @@ export class HomePageComponent implements OnInit {
       console.error(error);
 
     }
+  }
+
+  addProduct(){
+
+  }
+
+  editProduct(element: string){
+
+  }
+
+  onPageChange(){
+
+
   }
 }

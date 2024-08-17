@@ -2,6 +2,8 @@ import { ProductService } from './../../service/product.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProductDetails, ProductDetailsList } from '../../models/product';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 //Angular Material
 import { MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -14,7 +16,8 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -23,34 +26,31 @@ export class HomePageComponent implements OnInit {
   displayedColumns: string[] = ['productName', 'action']
   dataSource = new MatTableDataSource<ProductDetails>([]);
   tableData: ProductDetails[] = [];
-  tableData2: ProductDetailsList[] = [];
   productId: string = "";
   token: string = "";
   pageSize: number = 5
   totalItems: number = 100;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.token = localStorage.getItem('token')!;
+
     this.getProductListData();
   }
 
   getProductListData() {
-    this.token = localStorage.getItem('token')!;
-
-    let indexNumber = 0;
-    let pageSize = 5;
-    let startDate = '2022-01-25';
-    let endDate = '2022-02-16';
 
     try {
       this.productService.getProductList(this.token).subscribe(
-        (data) => {
+        (data : ProductDetails[]) => {
           console.log(data);
           this.tableData = data;
-          this.productId = data[0].id;
+
           this.dataSource.data = this.tableData;
-          this.getProductData(this.token, this.productId, indexNumber, pageSize, startDate,endDate);
         },
         (error) => {
           console.error('Error fetching product list: ', error);
@@ -61,28 +61,16 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  getProductData(token: string, productId: string, indexNumber: number, pageSize: number, startDate: string, endDate: string) {
+  goToProduct(element: ProductDetails){
 
-    console.log(productId);
-    try {
-      this.productService.getProductDetail(token, productId, indexNumber, pageSize, startDate, endDate).subscribe(
-        (data) => {
-          console.log(data)
+    this.router.navigate(['/product'], {
+      queryParams: {
+        id: element.id
+      }
+    })
 
-          this.tableData2 = data.data;
-          console.log(this.tableData2);
-        },
-        (error) => {
-          console.error('Error fetching product data: ', error);
-        }
-      )
 
-    } catch (error) {
-      console.error(error);
-
-    }
   }
-
   addProduct(){
 
   }
@@ -95,4 +83,5 @@ export class HomePageComponent implements OnInit {
 
 
   }
+
 }

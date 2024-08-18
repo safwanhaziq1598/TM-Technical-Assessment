@@ -141,12 +141,13 @@ export class ProductDetailPageComponent implements OnInit {
 
   onStartDateChange(event: any): void {
     this.startDate = event.value;
-    console.log(this.startDate);
+    console.log(this.startDate.setDate(this.startDate.getDate() + 1));
     this.applyDateFilter();
   }
 
   onEndDateChange(event: any): void {
     this.endDate = event.value;
+    console.log(this.endDate.setDate(this.endDate.getDate() + 1));
     this.applyDateFilter();
   }
 

@@ -46,8 +46,7 @@ export class EditProductDialogComponent {
 
 
   onUpdate(): void {
-
-
+    this.dialogRef.close({ action: 'update', data: this.productForm.value});
   }
 
   onRemove(): void {

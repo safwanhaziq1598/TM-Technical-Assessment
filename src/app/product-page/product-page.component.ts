@@ -120,9 +120,22 @@ export class ProductPageComponent {
       console.log(res);
       console.log(this.dataSource.data);
 
+      if (res.action == 'update') {
+        const index = this.dataSource.data.findIndex(
+          item => item.id == res.data.id
+        );
+        console.log(index);
+
+        if(index >= 0){
+          this.dataSource.data[index] = res.data;
+          console.log(this.dataSource.data);
+          this.dataSource._updateChangeSubscription();
+        }
+      }
+
       if (res.action == 'remove') {
         const index = this.dataSource.data.findIndex(
-          (x) => x.id === res.data.id
+          item => item.id === res.data.id
         );
         console.log(index);
 

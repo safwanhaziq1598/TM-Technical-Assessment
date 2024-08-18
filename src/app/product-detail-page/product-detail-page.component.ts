@@ -9,7 +9,7 @@ import { AuthService } from '../../service/auth.service';
 
 //Angular Material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatLabel } from '@angular/material/form-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,7 +25,7 @@ import {
   provideNativeDateAdapter,
   MatNativeDateModule,
 } from '@angular/material/core';
-import moment from 'moment';
+import moment, { duration } from 'moment';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -124,7 +124,10 @@ export class ProductDetailPageComponent implements OnInit {
             // console.log(endDate);
             // console.log(data);
 
-            this.tableData = data.data;
+            this.tableData = data.data.map((item : ProductDetailsList) => ({
+              ...item,
+              dateTime: moment(item.dateTime).format('YYYY/MM/DD h:mm:ss a'),
+            }));
             this.dataSource.data = this.tableData;
             console.log(this.tableData);
           },
@@ -168,5 +171,7 @@ export class ProductDetailPageComponent implements OnInit {
     }
   }
 
-  onPageChange() {}
+  onPageChange(event: PageEvent) {
+    console.log(event)
+  }
 }

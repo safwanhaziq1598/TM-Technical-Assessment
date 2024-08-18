@@ -50,7 +50,7 @@ export class LoginPageComponent implements OnInit {
           if (res.success) {
             localStorage.setItem('token', res.token);
             localStorage.setItem('tokenExpiry', res.tokeExpiry);
-            this.router.navigate(['/product']);
+            this.router.navigate(['/home/product']);
           } else {
             console.error('Login failed: Invalid credentials');
           }

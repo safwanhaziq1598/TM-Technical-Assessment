@@ -29,4 +29,9 @@ export class AuthService {
     }
     return throwError(() => new Error(errorMessage));
   }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
 }

@@ -77,29 +77,27 @@ export class ProductDetailPageComponent implements OnInit {
       this.productId = params['id'];
       this.indexNum = 0;
       this.pageSize = 5;
-      this.startDate = new Date();
-      this.endDate = new Date();
 
       const today = new Date();
       this.endDate =new Date(moment(today).format('YYYY-MM-DD'));
       const yesterday = new Date().setDate(today.getDate() - 1);
       this.startDate = new Date(moment(yesterday).format('YYYY-MM-DD'));
 
+      // console.log('Start Date:', this.startDate);
+      // console.log('End Date:', this.endDate);
 
-      console.log('Start Date:', this.startDate);
-      console.log('End Date:', this.endDate);
-
-      if (this.productId) {
-        this.getProductData(
-          this.token,
-          this.productId,
-          this.indexNum,
-          this.pageSize,
-          this.startDate,
-          this.endDate
-        );
-      }
     });
+
+    if (this.productId) {
+      this.getProductData(
+        this.token,
+        this.productId,
+        this.indexNum,
+        this.pageSize,
+        this.startDate,
+        this.endDate
+      );
+    }
   }
 
   getProductData(
@@ -122,9 +120,9 @@ export class ProductDetailPageComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            console.log(startDate);
-            console.log(endDate);
-            console.log(data);
+            // console.log(startDate);
+            // console.log(endDate);
+            // console.log(data);
 
             this.tableData = data.data;
             this.dataSource.data = this.tableData;
@@ -141,14 +139,18 @@ export class ProductDetailPageComponent implements OnInit {
 
   onStartDateChange(event: any): void {
     this.startDate = event.value;
-    console.log(this.startDate.setDate(this.startDate.getDate() + 1));
+    this.startDate.setDate(this.startDate.getDate() + 1)
+    // console.log(this.startDate.setDate(this.startDate.getDate() + 1));
     this.applyDateFilter();
+    this.startDate.setDate(this.startDate.getDate() - 1)
   }
 
   onEndDateChange(event: any): void {
     this.endDate = event.value;
-    console.log(this.endDate.setDate(this.endDate.getDate() + 1));
+    this.endDate.setDate(this.endDate.getDate() + 1)
+    // console.log(this.endDate.setDate(this.endDate.getDate() + 1));
     this.applyDateFilter();
+    this.endDate.setDate(this.endDate.getDate() - 1)
   }
 
   applyDateFilter() {

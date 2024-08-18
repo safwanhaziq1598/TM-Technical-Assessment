@@ -34,20 +34,20 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-
-    this.authService.isHome = true;
   }
 
 
   goHome(){
-
+    this.router.navigate(['/home/product']);
   }
 
   logout(){
-
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
 }

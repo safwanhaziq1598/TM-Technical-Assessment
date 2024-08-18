@@ -54,6 +54,20 @@ export class ProductService {
     return this.http.get<any>(url, {headers, params: queryParams});
   }
 
+  updateProduct(updatedProduct: ProductDetails): Observable<void> {
+    const index = this.productsList.findIndex(product => product.id === updatedProduct.id);
+    if (index !== -1) {
+      this.productsList[index] = updatedProduct;
+      this.productSubject.next(updatedProduct);
+    }
+    return of();
+  }
+
+  removeProduct(id: string): Observable<void> {
+    this.productsList = this.productsList.filter(product => product.id !== id);
+    this.productSubject.next(null);
+    return of();
+  }
 }
 
 

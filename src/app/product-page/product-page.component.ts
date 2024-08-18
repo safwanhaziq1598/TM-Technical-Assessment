@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { AddProductDialogComponent } from '../add-product-dialog/add-product-dialog.component';
+import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-dialog.component';
 
 @Component({
   selector: 'app-product-page',
@@ -103,7 +104,35 @@ export class ProductPageComponent {
     });
   }
 
-  editProduct(element: string) {}
+  editProduct(element: ProductDetails) {
+    console.log(element);
+
+    const dialogRef = this.dialog.open(EditProductDialogComponent, {
+      width: '400px',
+      data: {
+        id: element.id,
+        productName: element.productName,
+        url: element.url,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log(res);
+      console.log(this.dataSource.data);
+
+      if (res.action == 'remove') {
+        const index = this.dataSource.data.findIndex(
+          (x) => x.id === res.data.id
+        );
+        console.log(index);
+
+        if (index >= 0) {
+          this.dataSource.data.splice(index, 1);
+          this.dataSource._updateChangeSubscription();
+        }
+      }
+    });
+  }
 
   onPageChange() {}
 }

@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-edit-product-dialog',
@@ -20,6 +20,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } 
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     ReactiveFormsModule,
     FormsModule
   ],

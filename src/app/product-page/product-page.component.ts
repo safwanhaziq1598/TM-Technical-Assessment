@@ -16,6 +16,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { AddProductDialogComponent } from '../add-product-dialog/add-product-dialog.component';
 import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-dialog.component';
 
@@ -28,6 +30,8 @@ import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-
     MatCardModule,
     MatToolbarModule,
     MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
     CommonModule,
     RouterModule,
   ],
@@ -90,7 +94,7 @@ export class ProductPageComponent {
 
   addProduct() {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
-      width: '400px',
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe((res: ProductDetails) => {

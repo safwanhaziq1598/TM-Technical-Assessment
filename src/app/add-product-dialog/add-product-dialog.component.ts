@@ -11,6 +11,7 @@ import { ProductService } from '../../service/product.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -20,6 +21,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } 
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     ReactiveFormsModule,
     FormsModule
   ],

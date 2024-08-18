@@ -1,9 +1,16 @@
 <mat-toolbar color="primary">
-  <span>Product Management</span>
+  <span class="toolbar-title">Product Management</span>
   <span class="spacer"></span>
-  <button mat-button (click)="goHome()">Home</button>
-  <button mat-button (click)="logout()">Logout</button>
+  <button mat-icon-button (click)="goHome()" aria-label="Go Home">
+    <mat-icon>home</mat-icon>
+  </button>
+  <button mat-icon-button (click)="logout()" aria-label="Logout">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
+
+
+
 
 <div class="container">
   <router-outlet></router-outlet>

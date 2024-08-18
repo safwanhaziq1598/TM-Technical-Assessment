@@ -4,10 +4,43 @@
 
 mat-toolbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 0 16px;
+  background-color: #1976d2; /* Toolbar background color */
+  color: #fff; /* Text color */
 }
 
-.spacer {
+mat-toolbar .spacer {
   flex: 1 1 auto;
+}
+
+mat-toolbar button.mat-icon-button {
+  color: #fff; /* Icon color */
+  background-color: transparent !important; /* Force transparency */
+  border: none; /* Remove default border */
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+mat-toolbar button.mat-icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+mat-toolbar button.mat-icon-button:active {
+  background-color: rgba(255, 255, 255, 0.3); /* Darker background on click */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reset shadow on click */
+}
+
+mat-toolbar mat-icon {
+  color: #fff; /* Icon color */
+  font-size: 24px; /* Adjust icon size */
 }

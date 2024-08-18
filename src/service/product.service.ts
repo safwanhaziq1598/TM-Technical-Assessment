@@ -42,7 +42,7 @@ export class ProductService {
   //Get detail for each of the products
   getProductDetail(token: string, productId: string, indexNumber: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
 
-    const url = `${this.apiUrlProductList}/${productId}`;
+    const url = `${this.apiUrlProductDetails}/${productId}`;
     console.log(url);
     const headers = new HttpHeaders({
       'Authorization' : `Bearer ${token}`

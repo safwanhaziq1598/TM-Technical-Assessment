@@ -15,6 +15,7 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
+  //Login method with credentials
   login(credentials: User): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(this.apiLoginUrl, credentials)
     .pipe(
@@ -30,6 +31,7 @@ export class AuthService {
     return throwError(() => new Error(errorMessage));
   }
 
+  //To check if the user is authenticated
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
     return !!token;

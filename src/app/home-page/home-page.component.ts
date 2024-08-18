@@ -50,11 +50,12 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  //Button to go to homepage
   goHome(){
     this.router.navigate(['/home/product']);
   }
 
+  //Button to logout from the system
   logout(){
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

@@ -140,6 +140,7 @@ export class ProductDetailPageComponent implements OnInit {
     }
   }
 
+  //Datepicker method for startdate to set the filter of the startdate
   onStartDateChange(event: any): void {
     this.startDate = event.value;
     this.startDate.setDate(this.startDate.getDate() + 1)
@@ -148,6 +149,7 @@ export class ProductDetailPageComponent implements OnInit {
     this.startDate.setDate(this.startDate.getDate() - 1)
   }
 
+  //Datepicker method for enddate to set the filter of the enddate
   onEndDateChange(event: any): void {
     this.endDate = event.value;
     this.endDate.setDate(this.endDate.getDate() + 1)
@@ -156,6 +158,7 @@ export class ProductDetailPageComponent implements OnInit {
     this.endDate.setDate(this.endDate.getDate() - 1)
   }
 
+  //To apply the filter from the datepicker
   applyDateFilter() {
     try {
       this.getProductData(

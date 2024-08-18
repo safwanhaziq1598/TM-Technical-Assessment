@@ -67,6 +67,7 @@ export class ProductPageComponent {
     });
   }
 
+  //Fetch list of products available and display in the table
   getProductListData() {
     try {
       this.productService.getProductList(this.token).subscribe(
@@ -84,6 +85,7 @@ export class ProductPageComponent {
     }
   }
 
+  //When click on the product it will navigate to product detail to display relevent data of selected product
   goToProduct(element: ProductDetails) {
     this.router.navigate(['/product_detail'], {
       queryParams: {
@@ -92,6 +94,7 @@ export class ProductPageComponent {
     });
   }
 
+  //Method to open AddOroductDialog and add new product
   addProduct() {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       width: '500px',
@@ -108,6 +111,7 @@ export class ProductPageComponent {
     });
   }
 
+  //Method to open EditProductDialog to edit selected product
   editProduct(element: ProductDetails) {
     console.log(element);
 

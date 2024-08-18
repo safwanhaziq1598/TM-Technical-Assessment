@@ -43,6 +43,8 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit() {}
 
+  //Submit login credentials to api
+  //If success, it will navigate to homepage
   submitLogin() {
     try {
       this.authService.login(this.loginForm.value).subscribe(

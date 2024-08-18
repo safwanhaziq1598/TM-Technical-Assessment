@@ -45,11 +45,12 @@ export class EditProductDialogComponent {
     })
   }
 
-
+  //Update product details
   onUpdate(): void {
     this.dialogRef.close({ action: 'update', data: this.productForm.value});
   }
 
+  //Remove the current selected product
   onRemove(): void {
     this.dialogRef.close({ action: 'remove', data: this.data });
   }

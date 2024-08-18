@@ -48,6 +48,7 @@ export class AddProductDialogComponent implements OnInit {
 
   ngOnInit() {}
 
+  //Submit method to submit the data from the dialog to main component (product-page)
   onSubmit(){
     if (this.productForm.valid) {
       this.dialogRef.close(this.productForm.value);

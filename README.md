@@ -14,7 +14,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Build the dockerfile `docker build -t tm-assessment-app .`. To run the angular app into the docker `docker run -d -p 8080:80 tm-assessment-app`
 
-## URL for the application
+## DEMO URL for the application
 
 The application has already deploy in Google Cloud.
 Link: [https://tm-technical-assessment-3z26bq7lua-as.a.run.app]

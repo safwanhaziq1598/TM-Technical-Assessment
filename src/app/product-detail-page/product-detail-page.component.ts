@@ -1,6 +1,6 @@
 import { ProductService } from './../../service/product.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductDetails, ProductDetailsList } from '../../models/product';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,16 +8,25 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 
 //Angular Material
-import { MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatLabel } from '@angular/material/form-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCalendarCellClassFunction, MatDatepickerModule} from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MomentDateAdapter} from '@angular/material-moment-adapter';
+import {
+  MatDatepicker,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
+import {
+  provideNativeDateAdapter,
+  MatNativeDateModule,
+} from '@angular/material/core';
+import moment from 'moment';
+
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
@@ -27,85 +36,134 @@ import { MomentDateAdapter} from '@angular/material-moment-adapter';
     MatCardModule,
     MatLabel,
     MatFormFieldModule,
-    MatDatepickerModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
-    CommonModule
+    CommonModule,
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FORMATS }, // Use MAT_DATE_FORMATS
-    { provide: DateAdapter, useClass: MomentDateAdapter } // Provide MomentDateAdapter
+    { provide: DateAdapter, useClass: MomentDateAdapter }, // Provide MomentDateAdapter
+    provideNativeDateAdapter(),
   ],
   templateUrl: './product-detail-page.component.html',
-  styleUrl: './product-detail-page.component.scss'
+  styleUrl: './product-detail-page.component.scss',
 })
-export class ProductDetailPageComponent implements OnInit{
-
-  displayedColumns: string[] = ['status', 'dateTime', 'remark', 'duration']
+export class ProductDetailPageComponent implements OnInit {
+  displayedColumns: string[] = ['status', 'dateTime', 'remark', 'duration'];
   dataSource = new MatTableDataSource<ProductDetailsList>([]);
-  tableData: ProductDetailsList[] =[] ;
-  productId: string = "";
-  token: string = "";
-  pageSize: number = 5
+  tableData: ProductDetailsList[] = [];
+  productId: string = '';
+  token: string = '';
+  indexNum: number = 0;
+  pageSize: number = 5;
   totalItems: number = 100;
-  startDate: Date | null = null;
-  endDate: Date | null = null;
-
+  startDate: Date;
+  endDate: Date;
 
   constructor(
-    private authService:AuthService,
+    private authService: AuthService,
     private productService: ProductService,
     private route: ActivatedRoute
-  ){
-
+  ) {
+    this.startDate = new Date();
+    this.endDate = new Date();
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.token = localStorage.getItem('token')!;
+      this.productId = params['id'];
+      this.indexNum = 0;
+      this.pageSize = 5;
+      this.startDate = new Date();
+      this.endDate = new Date();
 
-    this.route.queryParams.subscribe(params => {
-      const token = localStorage.getItem('token')!;
-      const prodId = params['id'];
-      const indexNum = 0;
-      const pageSize = 5;
-      const startDate = '2022-01-25';
-      const endDate = '2022-02-16';
+      const today = new Date();
+      this.endDate =new Date(moment(today).format('YYYY-MM-DD'));
+      const yesterday = new Date().setDate(today.getDate() - 1);
+      this.startDate = new Date(moment(yesterday).format('YYYY-MM-DD'));
 
-      console.log(token);
-      if(prodId){
-        this.getProductData(token, prodId, indexNum, pageSize, startDate, endDate)
+
+      console.log('Start Date:', this.startDate);
+      console.log('End Date:', this.endDate);
+
+      if (this.productId) {
+        this.getProductData(
+          this.token,
+          this.productId,
+          this.indexNum,
+          this.pageSize,
+          this.startDate,
+          this.endDate
+        );
       }
-    })
+    });
   }
 
-
-  getProductData(token: string, productId: string, indexNumber: number, pageSize: number, startDate: string, endDate: string) {
-
+  getProductData(
+    token: string,
+    productId: string,
+    indexNumber: number,
+    pageSize: number,
+    startDate: Date,
+    endDate: Date
+  ) {
     try {
-      this.productService.getProductDetail(token, productId, indexNumber, pageSize, startDate, endDate).subscribe(
-        (data) => {
-          console.log(data)
+      this.productService
+        .getProductDetail(
+          token,
+          productId,
+          indexNumber,
+          pageSize,
+          startDate.toISOString().split('T')[0],
+          endDate.toISOString().split('T')[0]
+        )
+        .subscribe(
+          (data) => {
+            console.log(startDate);
+            console.log(endDate);
+            console.log(data);
 
-          this.tableData = data.data;
-          this.dataSource.data = this.tableData;
-          console.log(this.tableData);
-        },
-        (error) => {
-          console.error('Error fetching product data: ', error);
-        }
-      )
-
+            this.tableData = data.data;
+            this.dataSource.data = this.tableData;
+            console.log(this.tableData);
+          },
+          (error) => {
+            console.error('Error fetching product data: ', error);
+          }
+        );
     } catch (error) {
       console.error(error);
-
     }
   }
 
-  applyDateFilter(){
-
+  onStartDateChange(event: any): void {
+    this.startDate = event.value;
+    console.log(this.startDate);
+    this.applyDateFilter();
   }
 
-  onPageChange(){
-
-
+  onEndDateChange(event: any): void {
+    this.endDate = event.value;
+    this.applyDateFilter();
   }
+
+  applyDateFilter() {
+    try {
+      this.getProductData(
+        this.token,
+        this.productId,
+        this.indexNum,
+        this.pageSize,
+        this.startDate,
+        this.endDate
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  onPageChange() {}
 }

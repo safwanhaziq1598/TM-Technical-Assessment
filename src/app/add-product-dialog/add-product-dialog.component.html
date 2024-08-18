@@ -1,11 +1,18 @@
-<p>Add Product</p>
-<div>
-  <div>
-    <label>Product</label>
-    <input id="productName" type="text" required/>
-  </div>
-  <div>
-    <label>Address</label>
-    <input id="productUrl" type="text" required/>
-  </div>
+<h1 mat-dialog-title>Add Product</h1>
+<div mat-dialog-content>
+  <form [formGroup]="productForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Product</mat-label>
+      <input matInput formControlName="productName" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="url" required />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [disabled]="!productForm.valid" (click)="onSubmit()">
+    Submit
+  </button>
 </div>

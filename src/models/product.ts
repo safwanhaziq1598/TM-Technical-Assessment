@@ -16,3 +16,8 @@ export interface ProductDetailsList {
   title: string;
   totalLastStopTime: string;
 }
+
+export interface NewProduct{
+  productName: string;
+  prodcutUrl: string;
+}

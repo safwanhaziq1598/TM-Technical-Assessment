@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Params } from '@angular/router';
-import { ProductDetailsList } from '../models/product';
+import { ProductDetails, ProductDetailsList } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,22 @@ export class ProductService {
 
   private apiUrl1 = 'https://intermediate-test-v-2-web-test.apps.ocp.tmrnd.com.my/api/data/productList';
   private apiUrl2 = 'https://intermediate-test-v-2-web-test.apps.ocp.tmrnd.com.my/api/data/alert/list'
+
+  private productSubject: BehaviorSubject<ProductDetails | null> = new BehaviorSubject<ProductDetails | null>(null);
+  private productsList: ProductDetails[] = [];
   constructor(
     private http: HttpClient
   ) { }
+
+  addProduct(product: ProductDetails): Observable<void> {
+    this.productsList.push(product);
+    this.productSubject.next(product);
+    return of();
+  }
+
+  getProduct(): Observable<ProductDetails | null> {
+    return this.productSubject.asObservable();
+  }
 
   getProductList(token: string): Observable<any> {
     const headers = new HttpHeaders({
@@ -40,7 +53,7 @@ export class ProductService {
       console.log(queryParams);
     return this.http.get<any>(url, {headers, params: queryParams});
   }
+
 }
 
 
-//indexNum: number, pageSize: number, startDate: string, endDate: string
